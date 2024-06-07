@@ -6,6 +6,7 @@ const competitionRouter = require("./routes/competitionRoutes.js");
 const newsRouter = require("./routes/newsRoutes.js");
 const otherRouter = require("./routes/otherRoutes.js");
 const http = require("http");
+const serverless = require("serverless-http");
 const cookieParser = require("cookie-parser");
 
 
@@ -22,10 +23,15 @@ app.use(express.static("dist"))
 
 
 
-app.use("/api", userRouter);
-app.use("/api", competitionRouter);
-app.use("/api", newsRouter);
-app.use("/api", otherRouter);
+// app.use("/api", userRouter);
+// app.use("/api", competitionRouter);
+// app.use("/api", newsRouter);
+// app.use("/api", otherRouter);
+
+app.use("/.netlify/functions/index",userRouter);
+app.use("/.netlify/functions/index",competitionRouter);
+app.use("/.netlify/functions/index",newsRouter);
+app.use("/.netlify/functions/index",otherRouter);
 
 const server = http.createServer(app);
 const port = config.port || 5000
@@ -33,3 +39,5 @@ const port = config.port || 5000
 server.listen(port, '0.0.0.0',() =>
   console.log(`Server is live @ ${config.host_url}`)
 );
+
+module.exports.handler = serverless(app);

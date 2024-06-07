@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "netlify deploy --prod"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,8 @@
     "firebase": "^10.12.2",
     "firebase-admin": "^12.1.1",
     "http": "^0.0.1-security",
+    "netlify-lambda": "^2.0.16",
+    "serverless-http": "^3.2.0",
     "short-unique-id": "^5.2.0"
   }
 }
