@@ -19,7 +19,7 @@ const {
   createUserWithEmailAndPassword, 
   updatePassword: passwordUpdate, 
   signInWithEmailAndPassword, 
-  browserSessionPersistence
+  browserSessionPersistence,
 } = require("firebase/auth");
 const User = require("../models/user.js");
 const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
@@ -104,6 +104,7 @@ const createUser = async (req, res, next) => {
 };
 const getUser = async (req, res, next) => {
   try {
+    console.log(auth.currentUser);
     const id = req.params.id;
     const docRef = doc(db, "Users", id);
     const docSnapshot = await getDoc(docRef);
@@ -157,7 +158,7 @@ const deleteUser = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const credentials = req.body;
-    await setPersistence(auth, browserSessionPersistence);
+
 
      await signInWithEmailAndPassword(
       auth,
@@ -228,8 +229,6 @@ const uploadProfilePicture = async (req, res, next) => {
 };
 const updateLessonDone = async (req, res, next) => {
   const data = req.body;
-
-  const userDocRef = doc(db, "Users", data?.userId);
 
   try {
     const userDocRef = doc(db, "Users", data?.userId);
